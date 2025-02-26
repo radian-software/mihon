@@ -123,7 +123,7 @@ object SettingsAdvancedScreen : SearchableSettings {
                 },
             ),
             getBackgroundActivityGroup(),
-            getDataGroup(),
+            getDataGroup(basePreferences = basePreferences),
             getNetworkGroup(networkPreferences = networkPreferences),
             getLibraryGroup(),
             getReaderGroup(basePreferences = basePreferences),
@@ -171,7 +171,9 @@ object SettingsAdvancedScreen : SearchableSettings {
     }
 
     @Composable
-    private fun getDataGroup(): Preference.PreferenceGroup {
+    private fun getDataGroup(
+        basePreferences: BasePreferences,
+    ): Preference.PreferenceGroup {
         val context = LocalContext.current
         val navigator = LocalNavigator.currentOrThrow
 
@@ -191,6 +193,11 @@ object SettingsAdvancedScreen : SearchableSettings {
                     subtitle = stringResource(MR.strings.pref_clear_database_summary),
                     onClick = { navigator.push(ClearDatabaseScreen()) },
                 ),
+                Preference.PreferenceItem.SwitchPreference(
+                    preference = basePreferences.willDisambiguateChapterFilenames(),
+                    title = stringResource(MR.strings.pref_disambiguate_chapter_filenames),
+                    subtitle = stringResource(MR.strings.pref_disambiguate_chapter_filenames_summary),
+                )
             ),
         )
     }

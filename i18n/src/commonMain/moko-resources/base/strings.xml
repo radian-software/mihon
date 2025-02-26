@@ -616,6 +616,8 @@
     <string name="pref_verbose_logging">Verbose logging</string>
     <string name="pref_verbose_logging_summary">Print verbose logs to system log (reduces app performance)</string>
     <string name="pref_debug_info">Debug info</string>
+    <string name="pref_disambiguate_chapter_filenames">Disambiguate chapter filenames</string>
+    <string name="pref_disambiguate_chapter_filenames_summary">Append unique strings to each chapter filename. This prevents errors when you download a manga that has two different chapters with the same name.</string>
 
       <!-- About section -->
     <string name="website">Website</string>
