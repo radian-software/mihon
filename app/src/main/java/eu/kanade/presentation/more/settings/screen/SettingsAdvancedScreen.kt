@@ -194,7 +194,7 @@ object SettingsAdvancedScreen : SearchableSettings {
                     onClick = { navigator.push(ClearDatabaseScreen()) },
                 ),
                 Preference.PreferenceItem.SwitchPreference(
-                    preference = basePreferences.willDisambiguateChapterFilenames(),
+                    preference = basePreferences.disambiguateChapterFilenames(),
                     title = stringResource(MR.strings.pref_disambiguate_chapter_filenames),
                     subtitle = stringResource(MR.strings.pref_disambiguate_chapter_filenames_summary),
                 )

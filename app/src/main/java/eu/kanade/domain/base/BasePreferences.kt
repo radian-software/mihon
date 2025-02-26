@@ -36,5 +36,5 @@ class BasePreferences(
 
     fun alwaysDecodeLongStripWithSSIV() = preferenceStore.getBoolean("pref_always_decode_long_strip_with_ssiv", false)
 
-    fun willDisambiguateChapterFilenames() = preferenceStore.getBoolean("pref_disambiguate_chapter_filenames", false)
+    fun disambiguateChapterFilenames() = preferenceStore.getBoolean("pref_disambiguate_chapter_filenames", false)
 }
