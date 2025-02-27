@@ -275,7 +275,7 @@ class Downloader(
         val wasEmpty = queueState.value.isEmpty()
         val chaptersToQueue = chapters.asSequence()
             // Filter out those already downloaded.
-            .filter { provider.findChapterDir(it.name, it.scanlator, manga.title, source) == null }
+            .filter { provider.findChapterDir(it, manga.title, source) == null }
             // Add chapters to queue from the start.
             .sortedByDescending { it.sourceOrder }
             // Filter out those already enqueued.
@@ -330,10 +330,9 @@ class Downloader(
             return
         }
 
-        var chapterDirname = provider.getChapterDirName(download.chapter.name, download.chapter.scanlator)
+        var chapterDirname = provider.getChapterDirName(download.chapter)
         if (downloadPreferences.disambiguateChapterFilenames().get()) {
-            val disambiguator = Hash.md5(download.chapter.url)
-            chapterDirname += " (" + disambiguator.substring(0, 4) + ")"
+            chapterDirname += provider.getChapterDisambiguator(download.chapter)
         }
         val tmpDir = mangaDir.createDirectory(chapterDirname + TMP_DIR_SUFFIX)!!
 

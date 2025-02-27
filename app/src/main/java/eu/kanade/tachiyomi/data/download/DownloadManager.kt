@@ -159,7 +159,7 @@ class DownloadManager(
      * @return the list of pages from the chapter.
      */
     fun buildPageList(source: Source, manga: Manga, chapter: Chapter): List<Page> {
-        val chapterDir = provider.findChapterDir(chapter.name, chapter.scanlator, manga.title, source)
+        val chapterDir = provider.findChapterDir(chapter, manga.title, source)
         val files = chapterDir?.listFiles().orEmpty()
             .filter { it.isFile && ImageUtil.isImage(it.name) { it.openInputStream() } }
 
@@ -176,20 +176,18 @@ class DownloadManager(
     /**
      * Returns true if the chapter is downloaded.
      *
-     * @param chapterName the name of the chapter to query.
-     * @param chapterScanlator scanlator of the chapter to query
+     * @param chapter the chapter to query.
      * @param mangaTitle the title of the manga to query.
      * @param sourceId the id of the source of the chapter.
      * @param skipCache whether to skip the directory cache and check in the filesystem.
      */
     fun isChapterDownloaded(
-        chapterName: String,
-        chapterScanlator: String?,
+        chapter: Chapter,
         mangaTitle: String,
         sourceId: Long,
         skipCache: Boolean = false,
     ): Boolean {
-        return cache.isChapterDownloaded(chapterName, chapterScanlator, mangaTitle, sourceId, skipCache)
+        return cache.isChapterDownloaded(chapter, mangaTitle, sourceId, skipCache)
     }
 
     /**
@@ -336,7 +334,7 @@ class DownloadManager(
      * @param newChapter the target chapter with the new name.
      */
     suspend fun renameChapter(source: Source, manga: Manga, oldChapter: Chapter, newChapter: Chapter) {
-        val oldNames = provider.getValidChapterDirNames(oldChapter.name, oldChapter.scanlator)
+        val oldNames = provider.getValidChapterDirNames(oldChapter)
         val mangaDir = provider.getMangaDir(manga.title, source)
 
         // Assume there's only 1 version of the chapter name formats present
@@ -344,7 +342,7 @@ class DownloadManager(
             .mapNotNull { mangaDir.findFile(it) }
             .firstOrNull() ?: return
 
-        var newName = provider.getChapterDirName(newChapter.name, newChapter.scanlator)
+        var newName = provider.getChapterDirName(newChapter)
         if (oldDownload.isFile && oldDownload.extension == "cbz") {
             newName += ".cbz"
         }

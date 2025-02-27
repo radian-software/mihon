@@ -166,8 +166,7 @@ class ReaderViewModel @JvmOverloads constructor(
                                 (
                                     manga.downloadedFilterRaw == Manga.CHAPTER_SHOW_DOWNLOADED &&
                                         !downloadManager.isChapterDownloaded(
-                                            it.name,
-                                            it.scanlator,
+                                            it,
                                             manga.title,
                                             manga.source,
                                         )
@@ -175,8 +174,7 @@ class ReaderViewModel @JvmOverloads constructor(
                                 (
                                     manga.downloadedFilterRaw == Manga.CHAPTER_SHOW_NOT_DOWNLOADED &&
                                         downloadManager.isChapterDownloaded(
-                                            it.name,
-                                            it.scanlator,
+                                            it,
                                             manga.title,
                                             manga.source,
                                         )
@@ -388,8 +386,7 @@ class ReaderViewModel @JvmOverloads constructor(
             val manga = manga ?: return
             val dbChapter = chapter.chapter
             val isDownloaded = downloadManager.isChapterDownloaded(
-                dbChapter.name,
-                dbChapter.scanlator,
+                dbChapter,
                 manga.title,
                 manga.source,
                 skipCache = true,
@@ -464,8 +461,7 @@ class ReaderViewModel @JvmOverloads constructor(
 
         viewModelScope.launchIO {
             val isNextChapterDownloaded = downloadManager.isChapterDownloaded(
-                nextChapter.name,
-                nextChapter.scanlator,
+                nextChapter,
                 manga.title,
                 manga.source,
             )
